@@ -1,28 +1,35 @@
-alpha = 0.1
-beta = 1
-SL0 = 0.6
+from json import JSONEncoder
+import json
+import numpy as np
+import scipy.integrate as si
+import scipy.optimize as so
+import scipy as sp
+import scipy.stats as spt
+import matplotlib.pyplot as plt
 
-n = 100
-mu_t = 100
-sigma_t = 30
 
-ratio_l_nl = 0.5
+# region json
+class NumpyArrayEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        else:
+            return super(NumpyArrayEncoder, self).default(obj)
+# endregion
 
-mu_l = n * ratio_l_nl
-mu_nl = n * ratio_l_nl
 
-sigma_l = sigma_t * 2**(-0.5)
-sigma_nl = sigma_t * 2**(-0.5)
+# region Import Inputs
+with open("./inputs/inputs.json", "r") as read_file:
+    inputs = json.load(read_file)
 
-#p_m = 20
-p_m = 10
-#p_r = 10
-p_r = 20
-c_b = 8
-#c_h = 80
-c_h = 80
-#c_h = 200
-#b = 0.5
-
-p_b = 8
-buyback_percent = 0
+# Assign the value of each Json's key to itself.
+for key in inputs:
+    if isinstance(inputs[key], list):
+        globals()[key] = np.asarray(inputs[key])
+    else:
+        globals()[key] = inputs[key]
+# endregion
