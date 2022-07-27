@@ -69,5 +69,13 @@ def json_to_excel(results_json):
             ws.cell(row=rw+2, column=cn+1).value = results_json[str(rw)][cl]
             cn = cn + 1
 
-    wb.save('results.xlsx')
+    wb.save(nameof(results_json)+'.xlsx')
     return None
+
+
+def profit_r1(SL, k, buyback_percent):
+    return p_r * (mu(SL) - (1-b(SL)) * int1_(SL, k)) - b(SL)*c_b*int1_(SL, k) - (1-buyback_percent)*c_h * int2_(SL, k) + buyback_percent * p_b * int2_(SL, k)
+
+
+def profit_m(SL, k, buyback_percent):
+    return p_m * (mu(SL) - (1-b(SL)) * int1_(SL, k)) - buyback_percent * p_b * int2_(SL, k)

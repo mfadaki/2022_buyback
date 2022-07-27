@@ -8,8 +8,8 @@ import scipy.stats as spt
 import matplotlib.pyplot as plt
 from pprint import pprint
 import pandas as pd
-from tabulate import tabulate
 from openpyxl import Workbook
+from varname import nameof  # get the name of a variable
 
 
 # region json
