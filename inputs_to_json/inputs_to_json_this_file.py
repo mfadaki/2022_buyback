@@ -25,11 +25,6 @@ jsData = {
     "mu_t": 100,
     "sigma_t": 30,
     "ratio_l_nl": 0.5,
-    "test": jsData.row.getValue('ratio_l_nl') * 5,
-    "mu_l": "n" * "ratio_l_nl",
-    "mu_nl": n * ratio_l_nl,
-    "sigma_l": sigma_t * 2**(-0.5),
-    "sigma_nl": sigma_t * 2**(-0.5),
     "p_m": 10,
     "p_r": 20,
     "c_b": 8,
@@ -38,9 +33,27 @@ jsData = {
     "buyback_percent": 0
 }
 
+# If some of fields of Dictionary are calculated from previous fields, we need to put them in a seperate Dictionary, and them append them.
+jsData_calc = {
+    "mu_l": jsData["n"] * (1-jsData["ratio_l_nl"]),
+    "mu_nl": jsData["n"] * jsData["ratio_l_nl"],
+    "sigma_l": jsData["sigma_t"] * 2**(-0.5),
+    "sigma_nl": jsData["sigma_t"] * 2**(-0.5),
+}
+
+# This appends the jsData_calc to jsData
+jsData.update(jsData_calc)
+
 print(jsData)
 print(jsData["c_h"])
 
+# Writing to a file
+# **IMPORTANT:**
+# - Saving the file does not need the serialization az it is done via cls=NumpyArrayEncoder
+with open("./inputs_to_json/inputs.json", "w") as write_file:
+    json.dump(jsData, write_file, cls=NumpyArrayEncoder)
+
+########## FURTHER INFO ################
 
 #### Serialization ####
 encodedNumpyData = json.dumps(jsData, cls=NumpyArrayEncoder)  # use dump() to write array into file

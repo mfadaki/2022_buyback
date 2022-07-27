@@ -6,6 +6,10 @@ import scipy.optimize as so
 import scipy as sp
 import scipy.stats as spt
 import matplotlib.pyplot as plt
+from pprint import pprint
+import pandas as pd
+from tabulate import tabulate
+from openpyxl import Workbook
 
 
 # region json

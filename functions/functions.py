@@ -1,3 +1,6 @@
+from inputs.inputs import *
+
+
 def mu(SL):
     return mu_l + (1+alpha*(SL-SL0)*100)*mu_nl
 
@@ -46,3 +49,25 @@ def int2_(SL, k):
 def profit_r(SL, k):
     return p_r * (mu(SL) - (1-b(SL)) * int1_(SL, k)) - b(SL)*c_b*int1_(SL, k) - c_h * int2_(SL, k)
 
+
+def json_to_excel(results_json):
+    wb = Workbook()
+    wb.remove(wb['Sheet'])
+    wb.create_sheet("results")
+    ws = wb["results"]
+
+    col_headers = results_json[str(0)].keys()
+
+    col_no = 1
+    for cl in col_headers:
+        ws.cell(row=1, column=col_no).value = cl
+        col_no = col_no + 1
+
+    for rw in range(len(results_json.keys())):
+        cn = 0
+        for cl in col_headers:
+            ws.cell(row=rw+2, column=cn+1).value = results_json[str(rw)][cl]
+            cn = cn + 1
+
+    wb.save('results.xlsx')
+    return None
