@@ -19,6 +19,8 @@ for buyback_percent in buyback_percent_range:
     profit_r_opt = 0
     k_opt = 0
     SL_opt = 0
+    SL_opt_m = 0
+    k_opt_m = 0
 
     for SL in SL_range:
         mu_SL = mu(SL)
