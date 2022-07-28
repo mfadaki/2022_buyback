@@ -5,6 +5,7 @@ iteration = 0
 results_dict = {}
 buyback_percent_opt = 0
 profit_m_opt = 0
+k_opt = 0
 
 buyback_percent_arr = []
 prof_m_arr = []
@@ -46,8 +47,6 @@ for buyback_percent in buyback_percent_range:
         "k_opt": k_opt,
         "SL_opt": SL_opt,
         "prof_m": prof_m,
-        "k_opt_m": k_opt_m,
-        "SL_opt_m": SL_opt_m,
         "profit_r_m_opt": profit_r_m_opt
     }
 
@@ -79,6 +78,7 @@ y_arr = [val['prof_m'] for key, val in results_with_buyback_json.items()]
 
 # Plot one graph
 plt.plot(x_arr, y_arr)
+plt.savefig('profM_buyback_perc.png')
 plt.show()
 
 # Plot two graphs
