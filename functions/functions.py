@@ -69,7 +69,7 @@ def json_to_excel(results_json):
             ws.cell(row=rw+2, column=cn+1).value = results_json[str(rw)][cl]
             cn = cn + 1
 
-    wb.save(nameof(results_json)+'.xlsx')
+    wb.save('./results/'+nameof(results_json)+'.xlsx')
     return None
 
 

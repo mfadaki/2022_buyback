@@ -64,11 +64,11 @@ print(k_opt_m)
 print(SL_opt_m)
 
 # Save Dictionary to JSON
-with open("results_with_buyback.json", "w") as write_file:
+with open("./results/results_with_buyback.json", "w") as write_file:
     json.dump(results_dict, write_file, cls=NumpyArrayEncoder)
 
 # Load JSON to a Dictionary
-with open("results_with_buyback.json", "r") as read_file:
+with open("./results_with_buyback.json", "r") as read_file:
     results_with_buyback_json = json.load(read_file)
 
 # convert the Results JSON to Excel and Save it
@@ -80,12 +80,57 @@ y_arr = [val['prof_m'] for key, val in results_with_buyback_json.items()]
 
 # Plot one graph
 plt.plot(x_arr, y_arr)
-plt.savefig('profM_buyback_perc.png')
+plt.savefig('./results/profM_buyback_perc.png')
 plt.show()
 
+y_arr = [val['profit_r_opt']+val['prof_m'] for key, val in results_with_buyback_json.items()]
+
+# Plot one graph
+plt.plot(x_arr, y_arr)
+# plt.savefig('profM_buyback_perc.png')
+plt.show()
+
+
 # Plot two graphs
-y1_arr = [val['k'] for key, val in results_with_buyback_json.items()]
+y1_arr = [val['profit_r_opt'] for key, val in results_with_buyback_json.items()]
 figure, axis = plt.subplots(2)
 axis[0].plot(x_arr, y_arr)
-axis[1].plot(x1_arr, y_arr)
+axis[1].plot(x_arr, y1_arr)
+plt.show()
+
+# plot 4 graphs
+fig, axs = plt.subplots(2, 2)
+
+x_arr = [val['buyback_percent'] for key, val in results_with_buyback_json.items()]
+y_arr = [val['prof_m'] for key, val in results_with_buyback_json.items()]
+axs[0, 0].plot(x_arr, y_arr)
+axs[0, 0].set_title('Axis [0, 0]')
+axs[0, 0].set_xlabel('buyback_percent')
+axs[0, 0].set_ylabel('prof_m')
+
+y1_arr = [val['profit_r_opt'] for key, val in results_with_buyback_json.items()]
+axs[0, 1].plot(x_arr, y1_arr, 'tab:orange')
+axs[0, 1].set_title('Axis [0, 1]')
+axs[0, 1].set_xlabel('buyback_percent')
+axs[0, 1].set_ylabel('profit_r_opt')
+
+y2_arr = [val['profit_r_opt']+val['prof_m'] for key, val in results_with_buyback_json.items()]
+axs[1, 0].plot(x_arr, y2_arr, 'tab:green')
+axs[1, 0].set_title('Axis [1, 0]')
+axs[1, 0].set_xlabel('buyback_percent')
+axs[1, 0].set_ylabel('profit SC')
+
+x1_arr = [val['SL_opt'] for key, val in results_with_buyback_json.items()]
+axs[1, 1].plot(x1_arr, y_arr, 'tab:red')
+axs[1, 1].set_title('Axis [1, 1]')
+axs[1, 1].set_xlabel('SL_opt')
+axs[1, 1].set_ylabel('profit_m')
+
+# set the spacing between subplots
+plt.subplots_adjust(left=0.1,
+                    bottom=0.1,
+                    right=0.9,
+                    top=0.9,
+                    wspace=0.4,
+                    hspace=0.4)
 plt.show()
