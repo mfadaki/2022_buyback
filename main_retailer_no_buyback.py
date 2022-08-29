@@ -76,3 +76,4 @@ figure, axis = plt.subplots(2)
 axis[0].plot(x_arr, y_arr)
 axis[1].plot(x1_arr, y_arr)
 plt.show()
+###
